@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, markRaw, shallowRef } from 'vue'
+import { ref, reactive, markRaw, shallowRef, defineAsyncComponent } from 'vue'
 
 // import HelloWorld from './components/HelloWorld.vue'
 // import HelloWorld from './components/reactiveDemo.vue'
@@ -7,21 +7,61 @@ import AVue from './components/example/A.vue'
 import BVue from './components/example/B.vue'
 import CVue from './components/example/C.vue'
 
-const data = reactive([
-  {
-    name: 'A组件',
-    com: markRaw(AVue)
-  },
-  {
-    name: 'B组件',
-    com: markRaw(BVue)
-  },
-  {
-    name: 'C组件',
-    com: markRaw(CVue)
-  }
-])
+import Skeleton from './/components/example/skeleton.vue';
+const Sync = defineAsyncComponent(()=> import('./components/example/sync.vue'))
 
+
+// const data = reactive([
+//   {
+//     name: 'A组件',
+//     com: markRaw(AVue)
+//   },
+//   {
+//     name: 'B组件',
+//     com: markRaw(BVue)
+//   },
+//   {
+//     name: 'C组件',
+//     com: markRaw(CVue)
+//   }
+// ])
+const data = reactive<Tree[]>([
+    {
+        name: '1',
+        checked: false,
+        children: [
+            {
+                name: '1-1',
+                checked: false
+            }
+        ]
+    },
+    {
+        name: '2',
+        checked: false,
+    },
+    {
+        name: '3',
+        checked: false,
+        children: [
+            {
+                name: '3-1',
+                checked: false,
+                children: [
+                    {
+                        name: '3-1-1',
+                        checked: false
+                    },
+                    {
+                        name: '3-1-2',
+                        checked: false
+                    }
+                ]
+            }
+            
+        ]
+    }
+])
 const comId = shallowRef(AVue)
 const active = ref(0)
 
@@ -32,20 +72,20 @@ const switchCom = (item, index)=>{
 </script>
 
 <template>
-  <div style="display: flex">
+   <Suspense>
+    <!-- 具有深层异步依赖的组件 -->
+    <Sync />
+    <!-- 在 #fallback 插槽 -->
+    <template #fallback>
+      <Skeleton />
+    </template>
+  </Suspense>
+  <!-- <div style="display: flex">
     <div @click="switchCom(item, index)" :class="[active=== index?'active':'']" class="tabs" v-for="(item, index) in data">
       <div>{{ item.name }}</div>
     </div>
-
-    <!-- <TreeVue :data="data"></TreeVue> -->
-    <!-- <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a> -->
   </div>
-  <component :is="comId"></component>
+  <component :is="comId"></component> -->
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
 
