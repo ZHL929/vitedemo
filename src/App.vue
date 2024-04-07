@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, markRaw, shallowRef, defineAsyncComponent } from 'vue'
 
-// import HelloWorld from './components/HelloWorld.vue'
+import MyModal from './components/teleport.vue'
 // import HelloWorld from './components/reactiveDemo.vue'
 import AVue from './components/example/A.vue'
 import BVue from './components/example/B.vue'
@@ -64,6 +64,7 @@ const data = reactive<Tree[]>([
 ])
 const comId = shallowRef(AVue)
 const active = ref(0)
+const open = ref(false)
 
 const switchCom = (item, index)=>{
   comId.value = item.com
@@ -87,6 +88,13 @@ const switchCom = (item, index)=>{
   </div>
   <component :is="comId"></component> -->
   <!-- <HelloWorld msg="Vite + Vue" /> -->
+  <button @click="open = true">Open Modal</button>
+  <Teleport to="body">
+    <div v-if="open" class="modal">
+      <p>Hello from the modal!</p>
+      <button @click="open = false">Close</button>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped>
