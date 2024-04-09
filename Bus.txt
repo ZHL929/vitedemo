@@ -1,0 +1,83 @@
+type BusClass  = {
+  emit:(name:string)=>void
+  on:(name:string,callback:Function)=>void
+}
+type PramsKey = string | number | symbol
+
+type List = {
+  [key: PramsKey]: Array<Function>
+}
+class Bus implements BusClass{
+  list: List
+  constructor () {
+    this.list = {}
+  }
+  emit (name:string, ...args:Array<any>) {
+    let eventName:Array<Function> = this.list[name]
+    eventName.forEach(fn=>{
+      fn.apply(this,args)
+    })
+  }
+  on (name:string,callback:Function) {
+    let fn:Array<Function> = this.list[name] || []
+    fn.push(callback)
+    this.list[name] = fn
+  }
+}
+
+export default new Bus()
+<template>
+  <div class="A">
+    <el-button @click="emitB">派发一个事件</el-button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, reactive, toRefs, onMounted} from 'vue'
+import Bus from './Bus'
+let flag = false
+const emitB = () => {
+  flag = !flag
+  Bus.emit('on-click',flag)
+}
+
+</script>
+<style scoped>
+.A {
+  width: 200px;
+  height: 200px;
+  color:#fff;
+  background: blue;
+}
+</style>
+<template>
+  <div class="B">
+    <h1>B组件</h1>
+    {{ Flag }}
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, reactive, toRefs, onMounted} from 'vue'
+import Bus from './Bus'
+let Flag = ref(false)
+Bus.on('on-click', (flag:boolean)=>{
+  Flag.value = flag 
+})
+
+
+</script>
+<style scoped>
+.B {
+  width: 200px;
+  height: 200px;
+  color:#fff;
+  background: red;
+}
+</style>
+ <div>
+        <A></A>
+        <B></B>
+    </div> 
+ import A from './A.vue'
+ import B from './B.vue'
