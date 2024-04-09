@@ -6,6 +6,11 @@ import MyModal from './components/teleport.vue'
 import AVue from './components/example/A.vue'
 import BVue from './components/example/B.vue'
 import CVue from './components/example/C.vue'
+import provideInject from './components/provideInject/index.vue'
+import bus from './components/Bus/index.vue'
+import mitt from './components/mitt/index.vue'
+import tsx from './components/tsx/index'
+
 
 import Skeleton from './/components/example/skeleton.vue';
 const Sync = defineAsyncComponent(()=> import('./components/example/sync.vue'))
@@ -70,31 +75,23 @@ const switchCom = (item, index)=>{
   comId.value = item.com
   active.value = index
 }
+// const flag = ref<boolean>(true)
+
+
+const getItem = (item) => {
+  console.log('传回来了',item)
+}
+
 </script>
 
 <template>
-   <Suspense>
-    <!-- 具有深层异步依赖的组件 -->
-    <Sync />
-    <!-- 在 #fallback 插槽 -->
-    <template #fallback>
-      <Skeleton />
-    </template>
-  </Suspense>
-  <!-- <div style="display: flex">
-    <div @click="switchCom(item, index)" :class="[active=== index?'active':'']" class="tabs" v-for="(item, index) in data">
-      <div>{{ item.name }}</div>
-    </div>
-  </div>
-  <component :is="comId"></component> -->
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
-  <button @click="open = true">Open Modal</button>
-  <Teleport to="body">
-    <div v-if="open" class="modal">
-      <p>Hello from the modal!</p>
-      <button @click="open = false">Close</button>
-    </div>
-  </Teleport>
+  <!-- <el-button @click="flag = !flag">切换组件</el-button>
+   <AVue v-if="flag"></AVue>
+   <BVue v-else></BVue> -->
+  <!-- <provideInject></provideInject>
+  <bus></bus>
+  <mitt></mitt> -->
+  <tsx @on-click="getItem"></tsx>
 </template>
 
 <style scoped>
