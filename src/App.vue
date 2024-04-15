@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, markRaw, shallowRef, defineAsyncComponent } from 'vue'
+// import { ref, reactive, markRaw, shallowRef, defineAsyncComponent } from 'vue'
 
 import MyModal from './components/teleport.vue'
 // import HelloWorld from './components/reactiveDemo.vue'
@@ -75,7 +75,7 @@ const switchCom = (item, index)=>{
   comId.value = item.com
   active.value = index
 }
-// const flag = ref<boolean>(true)
+const flag = ref<boolean>(true)
 
 
 const getItem = (item) => {
@@ -85,9 +85,9 @@ const getItem = (item) => {
 </script>
 
 <template>
-  <!-- <el-button @click="flag = !flag">切换组件</el-button>
+  <el-button @click="flag = !flag">切换组件</el-button>
    <AVue v-if="flag"></AVue>
-   <BVue v-else></BVue> -->
+   <BVue v-else></BVue>
   <!-- <provideInject></provideInject>
   <bus></bus>
   <mitt></mitt> -->
