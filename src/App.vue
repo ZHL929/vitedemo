@@ -10,6 +10,7 @@ import provideInject from './components/provideInject/index.vue'
 import bus from './components/Bus/index.vue'
 import mitt from './components/mitt/index.vue'
 import tsx from './components/tsx/index'
+import vModel from './components/vModel/index.vue'
 
 
 import Skeleton from './/components/example/skeleton.vue';
@@ -85,13 +86,14 @@ const getItem = (item) => {
 </script>
 
 <template>
-  <el-button @click="flag = !flag">切换组件</el-button>
+  <!-- <el-button @click="flag = !flag">切换组件</el-button>
    <AVue v-if="flag"></AVue>
-   <BVue v-else></BVue>
+   <BVue v-else></BVue> -->
   <!-- <provideInject></provideInject>
   <bus></bus>
   <mitt></mitt> -->
-  <tsx @on-click="getItem"></tsx>
+  <!-- <tsx @on-click="getItem"></tsx> -->
+  <vModel></vModel>
 </template>
 
 <style scoped>
