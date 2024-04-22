@@ -11,6 +11,9 @@ import bus from './components/Bus/index.vue'
 import mitt from './components/mitt/index.vue'
 import tsx from './components/tsx/index'
 import vModel from './components/vModel/index.vue'
+import vMove from './components/directive/vMove.vue'
+import vHasShow from './components/directive/vHasShow.vue'
+import vLazy from './components/directive/vLazy.vue'
 
 
 import Skeleton from './/components/example/skeleton.vue';
@@ -93,7 +96,10 @@ const getItem = (item) => {
   <bus></bus>
   <mitt></mitt> -->
   <!-- <tsx @on-click="getItem"></tsx> -->
-  <vModel></vModel>
+  <!-- <vModel></vModel> -->
+  <!-- <vMove></vMove> -->
+  <!-- <vHasShow></vHasShow> -->
+  <vLazy></vLazy>
 </template>
 
 <style scoped>
