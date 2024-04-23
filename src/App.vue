@@ -100,6 +100,7 @@ const getItem = (item) => {
   <!-- <vMove></vMove> -->
   <!-- <vHasShow></vHasShow> -->
   <vLazy></vLazy>
+  <div>{{ $filters.format('ffff') }}</div>
 </template>
 
 <style scoped>

@@ -7,7 +7,7 @@
 </template>
  
 <script setup lang='ts'>
-import { ref, reactive } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
 import type { Directive } from 'vue'
 // glob 是懒加载的模式
 // let modules = {
@@ -15,6 +15,9 @@ import type { Directive } from 'vue'
 // }
 // globEager 是静态加载
 // import xx from 'xxx'
+
+const app = getCurrentInstance()
+console.log(app?.proxy?.$filters.format('js'))
 const images: Record<string, { default: string }> = import.meta.globEager('../../assets/images/*.*')
 const images1: Record<string, { default: string }> = import.meta.glob('../../assets/images/*.*',{eager: true})
 console.log(images1,"images1")

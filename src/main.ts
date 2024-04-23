@@ -19,6 +19,25 @@ const app = createApp(App)
  
 //Vue3挂载全局API
 app.config.globalProperties.$Bus = Mit
+
+
+type Filter = {
+    format<T>(str: T): string
+}
+ 
+// 声明要扩充@vue/runtime-core包的声明.
+// 这里扩充"ComponentCustomProperties"接口, 因为他是vue3中实例的属性的类型.
+declare module 'vue' {
+    export interface ComponentCustomProperties {
+        $filters: Filter
+    }
+}
+
+app.config.globalProperties.$filters = {
+    format<T extends any>(str: T): string {
+        return `可爱的${str}`
+    }
+}
 app.use(ElementPlus)
 app.mount('#app')
 // createApp(App).use(ElementPlus).mount('#app')
