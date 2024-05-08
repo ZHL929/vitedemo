@@ -14,11 +14,17 @@ import vModel from './components/vModel/index.vue'
 import vMove from './components/directive/vMove.vue'
 import vHasShow from './components/directive/vHasShow.vue'
 import vLazy from './components/directive/vLazy.vue'
+import AHooks from './components/AHooks.vue'
 
 
 import Skeleton from './/components/example/skeleton.vue';
 const Sync = defineAsyncComponent(()=> import('./components/example/sync.vue'))
 
+import useBase64 from './components/hooks'
+
+useBase64({ el: '#img' }).then(res=>{
+  console.log(res.baseUrl)
+})
 
 // const data = reactive([
 //   {
@@ -99,8 +105,10 @@ const getItem = (item) => {
   <!-- <vModel></vModel> -->
   <!-- <vMove></vMove> -->
   <!-- <vHasShow></vHasShow> -->
-  <vLazy></vLazy>
-  <div>{{ $filters.format('ffff') }}</div>
+  <!-- <vLazy></vLazy> -->
+  <!-- <div>{{ $filters.format('ffff') }}</div> -->
+  <AHooks a="aa" title="组件"></AHooks>
+  <img id="img" width="300" height="300" src="./assets/vue.svg"/>
 </template>
 
 <style scoped>
