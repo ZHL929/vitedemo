@@ -10,7 +10,7 @@ export default function (options: Options): Promise<{baseUrl: string}>{
         onMounted(()=>{
             let img: HTMLImageElement = document.querySelector(options.el) as HTMLImageElement
             console.log(img,"===============")
-            img.onload = () => {
+            img.onload = ():void => {
                 resolve({
                     baseUrl: base64(img)
                 })

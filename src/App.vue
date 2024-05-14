@@ -16,6 +16,9 @@ import vHasShow from './components/directive/vHasShow.vue'
 import vLazy from './components/directive/vLazy.vue'
 import AHooks from './components/AHooks.vue'
 
+import { useTestStore } from './store'
+import { storeToRefs } from 'pinia'
+
 
 import Skeleton from './/components/example/skeleton.vue';
 const Sync = defineAsyncComponent(()=> import('./components/example/sync.vue'))
@@ -92,6 +95,56 @@ const getItem = (item) => {
   console.log('传回来了',item)
 }
 
+const Test = useTestStore()
+// 直接解构是会失去响应性的
+const { current, age } = storeToRefs(Test)
+console.log(current, age);
+
+const Add = () => {
+  // 直接修改值
+  // Test.current++
+  // 批量修改State的值
+  // Test.$patch({
+  //   current: 200,
+  //   age: 300
+  // })
+  // 批量修改函数形式
+  // Test.$patch((state)=>{
+  //   state.current++;
+  //   state.age = 40
+  // })
+  // 通过原始对象修改整个实例
+  // Test.$state = {
+  //   current: 10,
+  //   age: 30
+  // }
+  // 通过actions修改
+  // Test.setCurrent()
+  // Test.randomizeCounter()
+  Test.getLoginInfo()
+}
+
+const change = () => {
+   Test.current++
+}
+const reset = () => {
+   Test.$reset()
+}
+// 类似于Vuex 的abscribe  只要有state 的变化就会走这个函数,如果你的组件卸载之后还想继续调用请设置第二个参数
+Test.$subscribe((args,state)=>{
+  console.log(args,state);
+},{
+  detached:true
+})
+// 只要有actions被调用就会走这个函数
+Test.$onAction((args)=>{
+  args.after(()=>{
+    console.log('after');
+  })
+  console.log(args, 'onAction');
+},true)
+
+
 </script>
 
 <template>
@@ -107,8 +160,26 @@ const getItem = (item) => {
   <!-- <vHasShow></vHasShow> -->
   <!-- <vLazy></vLazy> -->
   <!-- <div>{{ $filters.format('ffff') }}</div> -->
-  <AHooks a="aa" title="组件"></AHooks>
-  <img id="img" width="300" height="300" src="./assets/vue.svg"/>
+  <!-- <AHooks a="aa" title="组件"></AHooks> -->
+  <!-- <img id="img" width="300" height="300" src="./assets/vue.svg"/> -->
+  <div class="card">
+    <button type="button" @click="Add">+</button>
+    <button type="button" @click="reset">reset</button>
+    <!-- <div>count is {{ Test.current }}</div>
+    <div>{{ Test.age }}</div> -->
+   
+    <!-- <div>origin value {{Test.current}}</div>
+    <div>
+      pinia:{{ current }}--{{ age }}
+      change :
+      <button @click="change">change</button>
+    </div> -->
+    <div>{{ Test.user }}</div>
+    <!-- <div>{{ Test.name }}</div>
+    <div>{{ Test.newPrice }}</div>
+    <div>{{ Test.newName }}</div>
+    <div>{{ Test.newCurrent }}</div> -->
+  </div>
 </template>
 
 <style scoped>
